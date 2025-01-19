@@ -32,7 +32,7 @@ jobs:
     environment: ${{ inputs.environment }}
     strategy:
       matrix:
-        locations: ${{ needs.first-job.outputs.location }}
+        locations: ${{ fromJson(needs.first-job.outputs.location) }}
     steps:
       - name: Print variable
         run: |
