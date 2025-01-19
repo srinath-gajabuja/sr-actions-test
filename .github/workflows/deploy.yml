@@ -17,21 +17,22 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
+      location: ${{ steps.set-location.outputs.location }}
     steps:
       - name: Print variable
         run: |
           echo ${{ vars.TEST_YAML_ARRAY }}
-      - name: Set matrix for second job
-        id: set-matrix
-        run: echo 'matrix={"location":${{ vars.TEST_YAML_ARRAY }}}' >> $GITHUB_OUTPUT
+      - name: Set locations for second job
+        id: set-location
+        run: echo 'location=${{ vars.TEST_YAML_ARRAY }}' >> $GITHUB_OUTPUT
 
   second-job:
     needs: first-job
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     strategy:
-      matrix: ${{ needs.first-job.outputs.matrix }}
+      matrix:
+        locations: ${{ needs.first-job.outputs.location }}
     steps:
       - name: Print variable
         run: |
