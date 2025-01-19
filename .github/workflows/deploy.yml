@@ -1,0 +1,35 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'staging'
+        options:
+          - 'staging'
+          - 'production'
+        type: choice
+
+jobs:
+  first-job:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - name: Print variable
+        run: |
+          echo ${{ vars.TEST_YAML_ARRAY }}
+  
+  second-job:
+    needs: [first-job]
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    strategy:
+      matrix:
+        location: ${{ vars.TEST_YAML_ARRAY }}
+    steps:
+      - name: Print variable
+        run: |
+          echo "Location: ${{ matrix.location }}"
+
