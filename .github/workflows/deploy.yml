@@ -25,7 +25,7 @@ jobs:
         run: echo 'matrix={"location":${{ vars.TEST_YAML_ARRAY }}}' >> $GITHUB_OUTPUT
 
   second-job:
-    needs: [first-job]
+    needs: first-job
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     strategy:
