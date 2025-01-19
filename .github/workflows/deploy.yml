@@ -22,7 +22,7 @@ jobs:
           echo ${{ vars.TEST_YAML_ARRAY }}
       - name: Set matrix for second job
         id: set-matrix
-        run: echo 'matrix={"locations":${{ vars.TEST_YAML_ARRAY }}}' >> $GITHUB_OUTPUT
+        run: echo 'matrix={"location":${{ vars.TEST_YAML_ARRAY }}}' >> $GITHUB_OUTPUT
 
   second-job:
     needs: [first-job]
